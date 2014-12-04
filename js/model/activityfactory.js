@@ -1,13 +1,13 @@
-angular.module("workflow").factory("WorkflowFactory", function() {
-    var WorkflowFactory = {
+angular.module("workflow").factory("ActivityFactory", ["ActivityType", function(ActivityType) {
+    var ActivityFactory = {
         create: function(type) {
             var flow;
             switch (type) {
-                case types.Sequential: {
+                case ActivityType.Sequential: {
                     flow = new SequentialFlow();
                     break;
                 }
-                case types.StateMachine: {
+                case ActivityType.StateMachine: {
                     flow = new StateMachine();
                     break;
                 }
@@ -16,5 +16,5 @@ angular.module("workflow").factory("WorkflowFactory", function() {
         }
     };
 
-    return WorkflowFactory;
-});
+    return ActivityFactory;
+}]);

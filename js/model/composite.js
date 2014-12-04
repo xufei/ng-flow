@@ -3,5 +3,7 @@ angular.module("workflow").factory("CompositeActivity", ["Activity", function(Ac
         Activity.call(this);
     };
 
-    angular.extend(CompositeActivity.prototype, Activity);
+    CompositeActivity.prototype = new Activity();
+
+    return CompositeActivity;
 }]);
