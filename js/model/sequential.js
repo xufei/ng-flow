@@ -1,23 +1,32 @@
-angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType", function (Activity, WorkflowType) {
-    function SequentialFlow() {
-        this.type = WorkflowType.Sequential;
+angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType", "ActivityFactory", "Transition",
+    function (Activity, WorkflowType, ActivityFactory, Transition) {
+        function SequentialFlow() {
+            this.type = WorkflowType.Sequential;
 
-        this.activities = [];
-        this.transitions = [];
-    }
+            this.activities = [];
+            this.transitions = [];
 
-    SequentialFlow.prototype = new Activity();
+            this.start = this.addActivity(WorkflowType.Start);
+            this.finish = this.addActivity(WorkflowType.Finish);
 
-    SequentialFlow.prototype.clear = function () {
+            this.addTransition("", this.start, this.finish);
+        }
 
-    };
+        SequentialFlow.prototype = new Activity();
 
-    SequentialFlow.prototype.addActivity = function (data) {
-    };
+        SequentialFlow.prototype.clear = function () {
 
-    SequentialFlow.prototype.addTransition = function (data, from, to) {
+        };
 
-    };
+        SequentialFlow.prototype.addActivity = function (type) {
+            var activity = ActivityFactory.create(type);
+            this.activities.push(activity);
+        };
 
-    return SequentialFlow;
-}]);
+        SequentialFlow.prototype.addTransition = function (data, from, to) {
+            var transition = new Transition(data, from, to);
+            this.transitions.push(transition);
+        };
+
+        return SequentialFlow;
+    }]);

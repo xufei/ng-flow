@@ -61,7 +61,10 @@
                 </marker>
             </defs>
 
-            <use ng-repeat="activity in flow.activities" ng-attr-x="{{}}" ng-attr-y="{{}}" xlink:href="{{}}"/>
+            <use ng-repeat="activity in flow.activities"
+                 ng-attr-x="{{flowCtrl.nodeX(activity)}}"
+                 ng-attr-y="{{flowCtrl.nodeY($index)}}"
+                 xlink:href="{{'#' + activity.type}}"/>
 
             <use x="100" y="100" xlink:href="#start"/>
             <use x="100" y="200" xlink:href="#node"/>

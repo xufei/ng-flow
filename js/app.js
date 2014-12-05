@@ -17,26 +17,36 @@ angular.module("workflow").value("ActivityType", {
 
 
 angular.module("workflow").value("ActivityConfig", {
-    width: 100,
-    height: 60
-});
-
-angular.module("workflow").value("StartConfig", {
-    width: 40,
-    height: 40
-});
-
-angular.module("workflow").value("FinishConfig", {
-    width: 40,
-    height: 40
-});
-
-angular.module("workflow").value("DecisionConfig", {
-    width: 80,
-    height: 40
-});
-
-angular.module("workflow").value("StatementConfig", {
-    width: 80,
-    height: 40
+    "default": {
+        width: 100,
+        height: 60
+    },
+    "start": {
+        width: 40,
+        height: 40
+    },
+    "finish": {
+        width: 40,
+        height: 40
+    },
+    "if": {
+        width: 80,
+        height: 40
+    },
+    "switch": {
+        width: 80,
+        height: 40
+    },
+    "while": {
+        width: 80,
+        height: 40
+    },
+    "for": {
+        width: 80,
+        height: 40
+    },
+    "statement": {
+        width: 80,
+        height: 40
+    }
 });
