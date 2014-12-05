@@ -1,9 +1,10 @@
-angular.module("workflow").factory("SequentialFlow", ["CompositeActivity", function (CompositeActivity) {
+angular.module("workflow").factory("SequentialFlow", ["Activity", function (Activity) {
     function SequentialFlow() {
-
+        this.activities = [];
+        this.transitions = [];
     }
 
-    SequentialFlow.prototype = new CompositeActivity();
+    SequentialFlow.prototype = new Activity();
 
     SequentialFlow.prototype.clear = function () {
 
