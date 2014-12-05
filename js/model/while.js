@@ -1,12 +1,15 @@
-angular.module("workflow").factory("While", ["Activity", "Condition", "SequentialFlow", function(Activity, Condition, SequentialFlow) {
-    var While = function() {
-        Activity.call(this);
+angular.module("workflow").factory("While", ["Activity", "Condition", "SequentialFlow", "ActivityType",
+    function (Activity, Condition, SequentialFlow, ActivityType) {
+        var While = function () {
+            Activity.call(this);
 
-        this.condition = new Condition();
-        this.body = new SequentialFlow();
-    };
+            this.type = ActivityType.While;
 
-    While.prototype = new Activity();
+            this.condition = new Condition();
+            this.body = new SequentialFlow();
+        };
 
-    return While;
-}]);
+        While.prototype = new Activity();
+
+        return While;
+    }]);

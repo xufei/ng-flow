@@ -4,14 +4,20 @@ angular.module("workflow").factory("WorkflowFactory", ["SequentialFlow", "StateM
             create: function (type) {
                 var flow;
                 switch (type) {
-                    case WorkflowType.Sequential:
-                    {
-                        flow = new SequentialFlow();
-                        break;
-                    }
                     case WorkflowType.StateMachine:
                     {
                         flow = new StateMachine();
+                        break;
+                    }
+                    case WorkflowType.Sequential:
+                    {
+                        flow = new SequentialFlow();
+                        flow.addActivity();
+                        flow.addActivity();
+                        break;
+                    }
+                    default : {
+                        flow = new SequentialFlow();
                         break;
                     }
                 }

@@ -1,30 +1,29 @@
-angular.module("workflow").factory("StateMachine", ["Activity", "CompositeActivity", function(Activity, CompositeActivity) {
-    var State = Activity;
+angular.module("workflow").factory("StateMachine", ["Activity", "WorkflowType",
+    function (Activity, WorkflowType) {
+        var StateMachine = function () {
+            this.type = WorkflowType.StateMachine;
 
-    var StateMachine = function() {
-        CompositeActivity.call(this);
+            this.states = {};
+            this.transitions = [];
 
-        this.name = "State Machine";
-        this.states = {};
-        this.transitions = [];
+            this.startState = this.addState("Start");
+            this.finishState = this.addState("Finish");
 
-        this.startState = this.addState("Start");
-        this.finishState = this.addState("Finish");
+            this.currentState = this.startState;
+        };
 
-        this.currentState = this.startState;
-    };
+        StateMachine.prototype = new Activity();
 
-    StateMachine.prototype = {
-        load: function(data) {
-            for (var i=0; i<data.states.length; i++) {
+        StateMachine.prototype.load = function (data) {
+            for (var i = 0; i < data.states.length; i++) {
                 this.addState(data.states[i]);
             }
-        },
+        };
 
-        execute: function() {
+        StateMachine.prototype.execute = function () {
             this.currentState.execute();
 
-            for (var i=0; i<this.transitions.length; i++) {
+            for (var i = 0; i < this.transitions.length; i++) {
                 if (this.transitions[i].from == this.currentState) {
                     if (this.transitions[i].evaluate()) {
                         this.currentState = this.transitions[i].to;
@@ -32,18 +31,18 @@ angular.module("workflow").factory("StateMachine", ["Activity", "CompositeActivi
                     }
                 }
             }
-        },
+        };
 
-        addState: function(name) {
+        StateMachine.prototype.addState = function (name) {
             var state = new Activity(name);
 
             state.parent = this;
             this.states[name] = state;
 
             return state;
-        },
+        };
 
-        addTransition: function(data) {
+        StateMachine.prototype.addTransition = function (data) {
             var transition = new Transition(data);
 
             transition.parent = this;
@@ -52,13 +51,12 @@ angular.module("workflow").factory("StateMachine", ["Activity", "CompositeActivi
             transition.to = this.states[data.to];
 
             return transition;
-        },
+        };
 
-        isFinished: function() {
+        StateMachine.prototype.isFinished = function () {
             return this.currentState == this.finishState;
-        }
-    }.extend(Activity);
+        };
 
-    return StateMachine;
-}]);
+        return StateMachine;
+    }]);
 

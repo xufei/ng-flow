@@ -1,12 +1,15 @@
-angular.module("workflow").factory("For", ["Activity", "Condition", "SequentialFlow", function(Activity, Condition, SequentialFlow) {
-    var For = function() {
-        Activity.call(this);
+angular.module("workflow").factory("For", ["Activity", "Condition", "SequentialFlow", "ActivityType",
+    function (Activity, Condition, SequentialFlow, ActivityType) {
+        var For = function () {
+            Activity.call(this);
 
-        this.condition = new Condition();
-        this.body = new SequentialFlow();
-    };
+            this.type = ActivityType.For;
 
-    For.prototype = new Activity();
+            this.condition = new Condition();
+            this.body = new SequentialFlow();
+        };
 
-    return For;
-}]);
+        For.prototype = new Activity();
+
+        return For;
+    }]);

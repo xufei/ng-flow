@@ -1,5 +1,7 @@
-angular.module("workflow").factory("SequentialFlow", ["Activity", function (Activity) {
+angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType", function (Activity, WorkflowType) {
     function SequentialFlow() {
+        this.type = WorkflowType.Sequential;
+
         this.activities = [];
         this.transitions = [];
     }
@@ -11,7 +13,6 @@ angular.module("workflow").factory("SequentialFlow", ["Activity", function (Acti
     };
 
     SequentialFlow.prototype.addActivity = function (data) {
-
     };
 
     SequentialFlow.prototype.addTransition = function (data, from, to) {
