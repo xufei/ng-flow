@@ -1,5 +1,5 @@
-angular.module("workflow").factory("ActivityFactory", ["ActivityType", "Start", "Finish", "If", "Switch", "While", "For",
-    function(ActivityType, Start, Finish, If, Switch, While, For) {
+angular.module("workflow").factory("ActivityFactory", ["ActivityType", "Start", "Finish", "If", "Switch", "While", "For", "Statement",
+    function(ActivityType, Start, Finish, If, Switch, While, For, Statement) {
     var ActivityFactory = {
         create: function(type) {
             var activity;
@@ -26,6 +26,10 @@ angular.module("workflow").factory("ActivityFactory", ["ActivityType", "Start", 
                 }
                 case ActivityType.For: {
                     activity = new For();
+                    break;
+                }
+                case ActivityType.Statement: {
+                    activity = new Statement();
                     break;
                 }
             }
