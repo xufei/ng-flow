@@ -1,15 +1,10 @@
-angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType", "ActivityFactory", "Transition",
-    function (Activity, WorkflowType, ActivityFactory, Transition) {
+angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType", "Transition",
+    function (Activity, WorkflowType, Transition) {
         function SequentialFlow() {
             this.type = WorkflowType.Sequential;
 
             this.activities = [];
             this.transitions = [];
-
-            this.start = this.addActivity(WorkflowType.Start);
-            this.finish = this.addActivity(WorkflowType.Finish);
-
-            this.addTransition("", this.start, this.finish);
         }
 
         SequentialFlow.prototype = new Activity();
@@ -18,13 +13,11 @@ angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType"
 
         };
 
-        SequentialFlow.prototype.addActivity = function (type) {
-            var activity = ActivityFactory.create(type);
+        SequentialFlow.prototype.addActivity = function (activity) {
             this.activities.push(activity);
         };
 
-        SequentialFlow.prototype.addTransition = function (data, from, to) {
-            var transition = new Transition(data, from, to);
+        SequentialFlow.prototype.addTransition = function (transition) {
             this.transitions.push(transition);
         };
 

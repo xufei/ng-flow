@@ -15,6 +15,10 @@ angular.module("workflow").value("ActivityType", {
     Statement: "statement"
 });
 
+angular.module("workflow").value("WorkflowConfig", {
+    offsetX: 100,
+    offsetY: 100
+});
 
 angular.module("workflow").value("ActivityConfig", {
     "default": {
