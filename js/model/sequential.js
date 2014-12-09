@@ -14,6 +14,7 @@ angular.module("workflow").factory("SequentialFlow", ["Activity", "WorkflowType"
         };
 
         SequentialFlow.prototype.addActivity = function (activity) {
+            activity.parent = this;
             this.activities.push(activity);
         };
 

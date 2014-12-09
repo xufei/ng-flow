@@ -37,7 +37,7 @@
         <svg width="800" height="800" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 <g id="start">
-                    <circle cx="50" r="30" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                    <circle cx="20" r="20" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
                 </g>
 
                 <g id="node">
@@ -49,7 +49,7 @@
                 </g>
 
                 <g id="finish">
-                    <rect x="30" y="0" width="40" height="40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                    <rect width="40" height="40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
                 </g>
 
                 <marker id="markerCircle" markerWidth="8" markerHeight="8" refx="5" refy="5">
@@ -63,8 +63,15 @@
 
             <use ng-repeat="activity in flow.activities"
                  ng-attr-x="{{flowCtrl.nodeX(activity)}}"
-                 ng-attr-y="{{flowCtrl.nodeY($index)}}"
+                 ng-attr-y="{{flowCtrl.nodeY(activity)}}"
                  xlink:href="{{'#' + activity.type}}"/>
+
+            <path ng-repeat="transition in flow.transitions"
+                  ng-attr-d="{{flowCtrl.path(transition)}}"
+                  style="stroke: #6666ff; stroke-width: 1px; fill: none;
+                   marker-start: url(#markerCircle);
+                   marker-mid:url(#arrow);
+                   marker-end: url(#markerArrow)"/>
 
 
             <!--use x="100" y="100" xlink:href="#start"/>
