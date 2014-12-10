@@ -13,12 +13,13 @@ angular.module("workflow").controller("FlowCtrl", ["WorkflowFactory", "WorkflowC
             flow.addActivity(type);
         };
 
-        this.showInsertPosition = function(flow) {
+        this.prepareInsert = function(flow, type) {
             flow.isEditing = true;
+            flow.insertionType = type;
         };
 
         this.insertActivity = function(flow, transition) {
-            var activity = ActivityFactory.create(ActivityType.Statement);
+            var activity = ActivityFactory.create(flow.insertionType);
             flow.insert(activity, transition);
             flow.isEditing = false;
         };

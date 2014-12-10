@@ -12,7 +12,8 @@ angular.module("workflow").value("ActivityType", {
     Switch: "switch",
     While: "while",
     For: "for",
-    Statement: "statement"
+    Statement: "statement",
+    Sequential: "sequential"
 });
 
 angular.module("workflow").value("WorkflowConfig", {
