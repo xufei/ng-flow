@@ -1,13 +1,11 @@
-angular.module("workflow").factory("SequentialActivity", ["Activity", "Transition",
-    function (Activity, Transition) {
+angular.module("workflow").factory("SequentialActivity", ["Activity", "Transition", "ActivityType",
+    function (Activity, Transition, ActivityType) {
         var SequentialActivity = function () {
             Activity.call(this);
 
             this.type = ActivityType.Sequential;
 
-            this.condition = new Condition();
-            this.positive = new SequentialFlow();
-            this.negtive = new SequentialFlow();
+            this.transitions = [];
 
         };
 

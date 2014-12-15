@@ -6,6 +6,7 @@ angular.module("workflow").factory("If", ["Activity", "Condition", "SequentialAc
             this.type = ActivityType.If;
 
             this.condition = new Condition();
+            this.branches = [];
 
             var positive = new SequentialActivity();
             var negative = new SequentialActivity();
