@@ -30,83 +30,95 @@
 
 </head>
 <body ng-app="workflow">
-<div ng-controller="FlowCtrl as flowCtrl">
-    <ul class="nav nav-tabs">
-        <li ng-repeat="flow in flowCtrl.flows">flow</li>
-        <li>
-            <button ng-click="flowCtrl.addFlow()">+</button>
-        </li>
-    </ul>
-    <div ng-repeat="flow in flowCtrl.flows">
-        <div class="btn-group col-md-12">
-            <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flow, 'statement')">Statement</button>
-            <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flow, 'if')">If</button>
-            <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flow, 'switch')">Switch</button>
-            <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flow, 'while')">While</button>
-            <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flow, 'for')">For</button>
-        </div>
-        <div class="btn col-md-12">
-            <svg width="800" height="800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <g id="insertPoint">
-                        <circle r="5" stroke="#17301D" fill="#ffffff" stroke-width="1"/>
-                    </g>
+<h1>angular workflow</h1>
+<div class="row" ng-controller="FlowCtrl as flowCtrl">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">
+            <li ng-repeat="flow in flowCtrl.flows"
+                ng-click="flowCtrl.selectFlow(flow)">
+                <a href="javascript:void(0)">flow</a>
+            </li>
+            <li>
+                <a ng-click="flowCtrl.addFlow()">+</a>
+            </li>
+        </ul>
+        <div ng-if="flowCtrl.selectedFlow" class="tab-pane">
+            <div class="btn-group col-md-12">
+                <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flowCtrl.selectedFlow, 'statement')">Statement</button>
+                <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flowCtrl.selectedFlow, 'if')">If</button>
+                <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flowCtrl.selectedFlow, 'switch')">Switch</button>
+                <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flowCtrl.selectedFlow, 'while')">While</button>
+                <button class="btn btn-default" ng-click="flowCtrl.prepareInsert(flowCtrl.selectedFlow, 'for')">For</button>
+            </div>
+            <div class="col-md-12">
+                <svg width="1000" height="800" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <g id="insertPoint">
+                            <circle r="5" stroke="#17301D" fill="#ffffff" stroke-width="1"/>
+                        </g>
 
-                    <g id="start">
-                        <circle cx="20" cy="20" r="20" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
-                    </g>
+                        <g id="start">
+                            <circle cx="20" cy="20" r="20" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                        </g>
 
-                    <g id="if">
-                        <polygon points="0,20 40,0 80,20 40,40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
-                    </g>
+                        <g id="if">
+                            <polygon points="0,20 40,0 80,20 40,40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                        </g>
 
-                    <g id="finish">
-                        <rect width="40" height="40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
-                    </g>
+                        <g id="switch">
+                            <polygon points="0,20 40,0 80,20 40,40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                            <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;"/>
+                        </g>
 
-                    <g id="statement">
-                        <rect width="80" height="40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
-                    </g>
+                        <g id="finish">
+                            <rect width="40" height="40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                        </g>
 
-                    <marker id="markerCircle" markerWidth="8" markerHeight="8" refx="5" refy="5">
-                        <circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"/>
-                    </marker>
+                        <g id="statement">
+                            <rect width="80" height="40" fill="#219E3E" stroke="#17301D" stroke-width="2"/>
+                        </g>
 
-                    <marker id="insertPoint" markerWidth="8" markerHeight="8" refx="5" refy="5">
-                        <circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"/>
-                    </marker>
+                        <marker id="markerCircle" markerWidth="8" markerHeight="8" refx="5" refy="5">
+                            <circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"/>
+                        </marker>
 
-                    <marker id="markerArrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
-                        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;"/>
-                    </marker>
-                </defs>
+                        <marker id="insertPoint" markerWidth="8" markerHeight="8" refx="5" refy="5">
+                            <circle cx="5" cy="5" r="3" style="stroke: none; fill:#000000;"/>
+                        </marker>
 
-                <use ng-repeat="activity in flow.activities"
-                     ng-attr-x="{{flowCtrl.nodeX(activity)}}"
-                     ng-attr-y="{{flowCtrl.nodeY(activity)}}"
-                     xlink:href="{{'#' + activity.type}}"/>
+                        <marker id="markerArrow" markerWidth="13" markerHeight="13" refx="2" refy="6" orient="auto">
+                            <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;"/>
+                        </marker>
+                    </defs>
 
-                <path ng-repeat="transition in flow.transitions"
-                      ng-attr-d="{{flowCtrl.path(transition)}}"
-                      style="stroke: #6666ff; stroke-width: 1px; fill: none;
-                   marker-start: url(#markerCircle);
-                   marker-mid:url(#arrow);
-                   marker-end: url(#markerArrow)"/>
+                    <use ng-repeat="activity in flowCtrl.selectedFlow.activities"
+                         ng-attr-x="{{flowCtrl.nodeX(activity)}}"
+                         ng-attr-y="{{flowCtrl.nodeY(activity)}}"
+                         ng-click="flowCtrl.selectedFlow.selectActivity(activity)"
+                         xlink:href="{{'#' + activity.type}}"/>
 
-                <use ng-repeat="transition in flow.transitions" ng-show="flow.isEditing"
-                     ng-attr-x="{{flowCtrl.insertPositionX(transition)}}"
-                     ng-attr-Y="{{flowCtrl.insertPositionY(transition)}}"
-                     xlink:href="#insertPoint" ng-click="flowCtrl.insertActivity(flow, transition)"/>
-
-
-                <!--path d="M200,325 L250,325 L250,520 L180,520"
-                      style="stroke: #6666ff; stroke-width: 1px; fill: none;
+                    <path ng-repeat="transition in flowCtrl.selectedFlow.transitions"
+                          ng-attr-d="{{flowCtrl.path(transition)}}"
+                          style="stroke: #6666ff; stroke-width: 1px; fill: none;
                        marker-start: url(#markerCircle);
                        marker-mid:url(#arrow);
-                       marker-end: url(#markerArrow) "
-                        /-->
+                       marker-end: url(#markerArrow)"/>
 
-            </svg>
+                    <use ng-repeat="transition in flowCtrl.selectedFlow.transitions" ng-show="flowCtrl.selectedFlow.isEditing"
+                         ng-attr-x="{{flowCtrl.insertPositionX(transition)}}"
+                         ng-attr-Y="{{flowCtrl.insertPositionY(transition)}}"
+                         xlink:href="#insertPoint" ng-click="flowCtrl.insertActivity(flowCtrl.selectedFlow, transition)"/>
+
+
+                    <!--path d="M200,325 L250,325 L250,520 L180,520"
+                          style="stroke: #6666ff; stroke-width: 1px; fill: none;
+                           marker-start: url(#markerCircle);
+                           marker-mid:url(#arrow);
+                           marker-end: url(#markerArrow) "
+                            /-->
+
+                </svg>
+            </div>
         </div>
     </div>
 </div>

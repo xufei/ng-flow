@@ -7,10 +7,16 @@ angular.module("workflow").controller("FlowCtrl", ["WorkflowFactory", "WorkflowC
             var workflow = WorkflowFactory.create();
 
             this.flows.push(workflow);
+
+            this.selectFlow(workflow);
         };
 
         this.addActivity = function (flow, type) {
             flow.addActivity(type);
+        };
+
+        this.selectFlow = function(flow) {
+            this.selectedFlow = flow;
         };
 
         this.prepareInsert = function(flow, type) {
